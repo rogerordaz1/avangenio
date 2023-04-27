@@ -16,14 +16,13 @@ class LoginProvider extends ChangeNotifier {
 
   LoginState _state = LoginInitial();
   LoginState get state => _state;
-  bool isLoading = false;
+  
 
   Future<void> logInWithEmailAndPassword({
     required String email,
     required String password,
   }) async {
     _state = LoginLoading();
-    isLoading = true;
     notifyListeners();
 
     final either = await usecase.call(email: email, password: password);
@@ -38,7 +37,7 @@ class LoginProvider extends ChangeNotifier {
       },
     );
 
-    isLoading = false;
-    notifyListeners();
+      notifyListeners();
+  
   }
 }

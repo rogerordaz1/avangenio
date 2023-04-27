@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:avangenio/features/auth/data/repositories/auth_user_repository_impl.dart';
 import 'package:avangenio/features/auth/presentation/blocs/authentication/authentication_provider.dart';
 import 'package:avangenio/features/auth/presentation/blocs/login/login_provider.dart';
+import 'package:avangenio/features/auth/presentation/blocs/register/register_provider.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -39,7 +40,7 @@ Future<void> init() async {
 
   getIt.registerLazySingleton(
       () => LoginUserWithEmailAndPasswordUsecase(getIt<AuthUserRepository>()));
-  getIt.registerLazySingleton(() async =>
+  getIt.registerLazySingleton(()  =>
       RegisterUserWithEmailAndPasswordUsecase(getIt<AuthUserRepository>()));
 
   //? Providers
@@ -54,6 +55,11 @@ Future<void> init() async {
       sharedPreferences: sharedPreferencesInstance,
     ),
   );
-
-
+  getIt.registerFactoryAsync<RegisterProvider>(
+    () async => RegisterProvider(
+      usecase: getIt<RegisterUserWithEmailAndPasswordUsecase>(),
+      autheticationProvider: getIt<AutheticationProvider>(),
+      sharedPreferences: sharedPreferencesInstance,
+    ),
+  );
 }

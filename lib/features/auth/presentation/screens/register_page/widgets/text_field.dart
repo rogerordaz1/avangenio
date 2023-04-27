@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../../cubit/login_text_fields_helper_cubit.dart';
 import '../../login_page/widgets/text_field_widget/text_email_field_input.dart';
 import '../../login_page/widgets/text_field_widget/text_field_password.dart';
 
@@ -7,7 +9,7 @@ class RegisterTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   
+    var loginCubit = context.watch<LoginTextFieldsHelperCubit>();
     return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -20,8 +22,7 @@ class RegisterTextField extends StatelessWidget {
                 return null;
               },
               onChange: (value) {
-
-              //  loginCubit.onUsernameChanded(value),
+                loginCubit.onUsernameChanded(value);
               },
               text: "nombre de usuario",
               iconName: Icons.account_circle,
@@ -40,32 +41,29 @@ class RegisterTextField extends StatelessWidget {
               return null;
             },
             onChange: (value) {
-
-            // loginCubit.onEmailChanged(value),
-            } ,
+              loginCubit.onEmailChanged(value);
+            },
             text: "email",
             iconName: Icons.mail,
             ltext: "Email",
           ),
           TextFieldPassword(
-            onValidator: (value) {
-              final passwordRegExp = RegExp(
-                  r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
-              if (value == null || value.isEmpty) {
-                return 'Please enter some text';
-              }
-              if (!passwordRegExp.hasMatch(value)) {
-                return "La contrasena debe tener al menos una letra minúscula,\nun número,carácter especial, 8 caracteres de longitud";
-              }
-              return null;
-            },
-            hintText: 'contraseña',
-            labelText: 'Contraseña',
-            onChange: (value) {
-
-            // loginCubit.onPassWordChanded(value),
-            } 
-          ),
+              onValidator: (value) {
+                final passwordRegExp = RegExp(
+                    r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+                if (value == null || value.isEmpty) {
+                  return 'Please enter some text';
+                }
+                if (!passwordRegExp.hasMatch(value)) {
+                  return "La contrasena debe tener al menos una letra minúscula,\nun número,carácter especial, 8 caracteres de longitud";
+                }
+                return null;
+              },
+              hintText: 'contraseña',
+              labelText: 'Contraseña',
+              onChange: (value) {
+                loginCubit.onPassWordChanded(value);
+              }),
         ]);
   }
 }

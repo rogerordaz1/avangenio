@@ -1,5 +1,8 @@
 import 'package:avangenio/features/auth/presentation/blocs/login/login_provider.dart';
+import 'package:avangenio/features/auth/presentation/blocs/login/login_state.dart';
+import 'package:avangenio/features/auth/presentation/screens/home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 import '../../cubit/login_text_fields_helper_cubit.dart';
 import '../../widgets/login_button.dart';
@@ -38,16 +41,38 @@ class _LoginPageBodyState extends State<_LoginPageBody> {
 
     final formKey = GlobalKey<FormState>();
     return Consumer<LoginProvider>(
-      builder: (context, state, _) {
-        if (state.isLoading) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
+      builder: (context, provider, _) {
+        () {
+          if (provider.state is LoginError) {
+            SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+              SnackBar snackBar = const SnackBar(content: Text('Erroororro'));
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            });
+          }
+
+          if (provider.state is LoginSussess) {
+            SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+              var route = MaterialPageRoute(
+                builder: (context) {
+                  return const HomePage();
+                },
+              );
+              Navigator.of(context).pushReplacement(route);
+            });
+          }
+        }();
+
         return SingleChildScrollView(
           child: Column(
             children: [
               const LogoImage(),
+              provider.state is LoginLoading
+                  ? const AlertDialog(
+                      content: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    )
+                  : const SizedBox(),
               Form(
                 key: formKey,
                 child: const LoginTextField(),

@@ -36,4 +36,14 @@ class AutheticationProvider extends ChangeNotifier {
     _state = AuthenticationAuthenticated();
     notifyListeners();
   }
+
+  void loggedOutUser() async {
+    _state = AuthenticationLoading();
+    notifyListeners();
+
+    await sharedPreferences.remove('loged');
+
+    _state = AuthenticationUnauthenticated();
+    notifyListeners();
+  }
 }

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:avangenio/core/error/exeptions.dart';
@@ -28,7 +29,7 @@ class UserLocalDataSourceImpl extends UserLocalDataSource {
     required String email,
     required String password,
   }) async {
-    
+    await Future.delayed(const Duration(seconds: 2));
 
     final userJson = sharedPreferences.getString('user');
 

@@ -1,5 +1,6 @@
 import 'package:avangenio/features/auth/presentation/blocs/authentication/authentication_provider.dart';
 import 'package:avangenio/features/auth/presentation/blocs/login/login_provider.dart';
+import 'package:avangenio/features/auth/presentation/blocs/register/register_provider.dart';
 import 'package:avangenio/features/auth/presentation/screens/login_page/login_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,6 +22,13 @@ void main() async {
         ),
         ChangeNotifierProvider<LoginProvider>(
           create: (_) => LoginProvider(
+            usecase: getIt(),
+            autheticationProvider: getIt(),
+            sharedPreferences: getIt(),
+          ),
+        ),
+        ChangeNotifierProvider<RegisterProvider>(
+          create: (_) => RegisterProvider(
             usecase: getIt(),
             autheticationProvider: getIt(),
             sharedPreferences: getIt(),
