@@ -30,13 +30,6 @@ class LogoImage extends StatelessWidget {
 
                     /// 150.0
                     height: SizeConfig.blockSizeVertical! * 10,
-
-                    /// 88.0
-                    child: Container(
-                      decoration: const BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage('assets/main/logo.png'))),
-                    ),
                   ),
                 ),
                 Center(

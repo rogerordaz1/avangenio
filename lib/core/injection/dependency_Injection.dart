@@ -51,14 +51,13 @@ Future<void> init() async {
   getIt.registerFactoryAsync<LoginProvider>(
     () async => LoginProvider(
       usecase: getIt<LoginUserWithEmailAndPasswordUsecase>(),
-      autheticationProvider: getIt<AutheticationProvider>(),
+      
       sharedPreferences: sharedPreferencesInstance,
     ),
   );
   getIt.registerFactoryAsync<RegisterProvider>(
     () async => RegisterProvider(
       usecase: getIt<RegisterUserWithEmailAndPasswordUsecase>(),
-      autheticationProvider: getIt<AutheticationProvider>(),
       sharedPreferences: sharedPreferencesInstance,
     ),
   );

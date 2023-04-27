@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../data/models/user_model.dart';
+import '../../../domain/entities/user.dart';
 import 'autentication_state.dart';
 
 class AutheticationProvider extends ChangeNotifier {
@@ -20,7 +24,23 @@ class AutheticationProvider extends ChangeNotifier {
 
     if (isLogged != null) {
       if (isLogged) {
-        _state = AuthenticationAuthenticated();
+        final userEmail = sharedPreferences.getString('emailLoged');
+        
+        if (userEmail != null && userEmail != '') {
+        final userJson = sharedPreferences.getString(userEmail);
+          
+          var user = UserModel.fromJson(jsonDecode(userJson!));
+
+          _state = AuthenticationAuthenticated(user);
+          notifyListeners();
+        } else {
+          _state = AuthenticationUnauthenticated();
+          notifyListeners();
+        }
+
+        
+      } else {
+        _state = AuthenticationUnauthenticated();
         notifyListeners();
       }
     } else {
@@ -29,11 +49,11 @@ class AutheticationProvider extends ChangeNotifier {
     }
   }
 
-  void loggedInUser() {
+  void loggedInUser(User user) {
     _state = AuthenticationLoading();
     notifyListeners();
 
-    _state = AuthenticationAuthenticated();
+    _state = AuthenticationAuthenticated(user);
     notifyListeners();
   }
 
@@ -41,7 +61,8 @@ class AutheticationProvider extends ChangeNotifier {
     _state = AuthenticationLoading();
     notifyListeners();
 
-    await sharedPreferences.remove('loged');
+    await sharedPreferences.setBool('loged', false);
+    await sharedPreferences.setString('emailLoged', '');
 
     _state = AuthenticationUnauthenticated();
     notifyListeners();

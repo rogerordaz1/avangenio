@@ -4,7 +4,7 @@ import '../../../../core/constantes/colors.dart';
 import '../../../../core/utils/size_config.dart';
 
 class AuthButonColor extends StatelessWidget {
-  final String buttonText;
+  final Widget buttonText;
   final VoidCallback onPressed;
   const AuthButonColor({
     Key? key,
@@ -32,8 +32,8 @@ class AuthButonColor extends StatelessWidget {
               BorderRadius.circular(SizeConfig.blockSizeHorizontal! * 8),
         ),
         child: ElevatedButton(
-
           style: ButtonStyle(
+            backgroundColor: MaterialStatePropertyAll(buttonColor),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
                 borderRadius:
@@ -46,16 +46,9 @@ class AuthButonColor extends StatelessWidget {
             ),
           ),
           onPressed: onPressed,
-          child: Text(
-            buttonText,
-            style: TextStyle(
-              fontSize: SizeConfig.blockSizeHorizontal! * 6,
-              fontWeight: FontWeight.w700,
-              color: Colors.white,
-            ),
+          child: buttonText,
 
-            /// 16
-          ),
+          /// 16
         ),
       ),
     );

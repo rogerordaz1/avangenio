@@ -8,15 +8,18 @@ class UserModel extends User {
   const UserModel({
     required String email,
     required String fullName,
+    String? password,
   }) : super(
           email: email,
           fullName: fullName,
+          password: password,
         );
 
   @override
   List<Object?> get props => [
         fullName,
         email,
+        password,
       ];
 
   factory UserModel.fromJson(Map<String, dynamic> json) =>

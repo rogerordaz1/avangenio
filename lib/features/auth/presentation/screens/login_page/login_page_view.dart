@@ -1,9 +1,11 @@
+import 'package:avangenio/features/auth/presentation/blocs/authentication/authentication_provider.dart';
 import 'package:avangenio/features/auth/presentation/blocs/login/login_provider.dart';
 import 'package:avangenio/features/auth/presentation/blocs/login/login_state.dart';
-import 'package:avangenio/features/auth/presentation/screens/home_page.dart';
+import 'package:avangenio/features/home/presentation/profile_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
+import '../../../../../core/utils/size_config.dart';
 import '../../cubit/login_text_fields_helper_cubit.dart';
 import '../../widgets/login_button.dart';
 import '../../widgets/text_signup_or_singin.dart';
@@ -37,24 +39,29 @@ class _LoginPageBody extends StatefulWidget {
 class _LoginPageBodyState extends State<_LoginPageBody> {
   @override
   Widget build(BuildContext context) {
-    final logicProvider = context.read<LoginProvider>();
+    final logicProvider = context.watch<LoginProvider>();
+    final authProv = context.read<AutheticationProvider>();
 
     final formKey = GlobalKey<FormState>();
     return Consumer<LoginProvider>(
       builder: (context, provider, _) {
+        var state = provider.state;
+
         () {
-          if (provider.state is LoginError) {
-            SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+          if (state is LoginError) {
+            SchedulerBinding.instance.addPostFrameCallback((_) {
               SnackBar snackBar = const SnackBar(content: Text('Erroororro'));
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
             });
           }
 
-          if (provider.state is LoginSussess) {
-            SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+          if (state is LoginSussess) {
+            SchedulerBinding.instance.addPostFrameCallback((_) {
+              authProv.loggedInUser(state.user);
+
               var route = MaterialPageRoute(
                 builder: (context) {
-                  return const HomePage();
+                  return const ProfilePageView();
                 },
               );
               Navigator.of(context).pushReplacement(route);
@@ -66,13 +73,6 @@ class _LoginPageBodyState extends State<_LoginPageBody> {
           child: Column(
             children: [
               const LogoImage(),
-              provider.state is LoginLoading
-                  ? const AlertDialog(
-                      content: Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    )
-                  : const SizedBox(),
               Form(
                 key: formKey,
                 child: const LoginTextField(),
@@ -84,7 +84,6 @@ class _LoginPageBodyState extends State<_LoginPageBody> {
                       context.watch<LoginTextFieldsHelperCubit>().state;
 
                   return AuthButonColor(
-                    buttonText: 'Iniciar Sessión',
                     onPressed: () async {
                       if (formKey.currentState!.validate()) {
                         await logicProvider.logInWithEmailAndPassword(
@@ -93,13 +92,35 @@ class _LoginPageBodyState extends State<_LoginPageBody> {
                         );
                       }
                     },
+                    buttonText: provider.state is LoginLoading
+                        ? Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: const [
+                                Flexible(
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        : Text(
+                            "Iniciar Sessiòn",
+                            style: TextStyle(
+                              fontSize: SizeConfig.blockSizeHorizontal! * 6,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.white,
+                            ),
+                          ),
                   );
                 },
               ),
               TextSignUpOrSingIn(
                 phrase: "¿No tienes una cuenta? ",
                 singInOrSingUpText: 'Registrar',
-                onPressed: () => Navigator.push(
+                onPressed: () => Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) => const RegisterPageView(),

@@ -8,12 +8,12 @@ import '../authentication/authentication_provider.dart';
 class RegisterProvider extends ChangeNotifier {
   final SharedPreferences sharedPreferences;
   final RegisterUserWithEmailAndPasswordUsecase usecase;
-  final AutheticationProvider autheticationProvider;
+  
 
   RegisterProvider({
     required this.sharedPreferences,
     required this.usecase,
-    required this.autheticationProvider,
+   
   });
 
   RegisterState _state = RegisterInitial();
@@ -37,7 +37,7 @@ class RegisterProvider extends ChangeNotifier {
       },
       (user) {
         _state = RegisterSussess(user: user);
-        autheticationProvider.loggedInUser();
+        
       },
     );
 

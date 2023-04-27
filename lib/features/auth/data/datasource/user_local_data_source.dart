@@ -31,12 +31,13 @@ class UserLocalDataSourceImpl extends UserLocalDataSource {
   }) async {
     await Future.delayed(const Duration(seconds: 2));
 
-    final userJson = sharedPreferences.getString('user');
+    final userJson = sharedPreferences.getString(email);
 
     if (userJson != null) {
       var user = UserModel.fromJson(jsonDecode(userJson));
 
       await sharedPreferences.setBool('loged', true);
+      await sharedPreferences.setString('emailLoged', email);
 
       return user;
     } else {
@@ -50,10 +51,13 @@ class UserLocalDataSourceImpl extends UserLocalDataSource {
     required String email,
     required String password,
   }) async {
-    var user = UserModel(email: email, fullName: fullName);
+    await Future.delayed(const Duration(seconds: 2));
 
-    final valor = await sharedPreferences.setString('user', jsonEncode(user));
+    var user = UserModel(email: email, fullName: fullName, password: password);
+
+    final valor = await sharedPreferences.setString(email, jsonEncode(user));
     await sharedPreferences.setBool('loged', true);
+    await sharedPreferences.setString('emailLoged', email);
 
     if (valor) {
       return user;
