@@ -22,7 +22,7 @@ class BackgroundImage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: const [
               Center(
-                child: TextTitle(title: "Create Account"),
+                child: TextTitle(title: "Crear Cuenta"),
               ),
             ],
           ),

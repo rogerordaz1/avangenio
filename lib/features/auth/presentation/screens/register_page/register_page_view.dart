@@ -79,6 +79,8 @@ class RegisterPageView extends StatelessWidget {
                       buttonText: provider.state is RegisterLoading
                           ? Center(
                               child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: const [
                                   Flexible(
                                     child: CircularProgressIndicator(

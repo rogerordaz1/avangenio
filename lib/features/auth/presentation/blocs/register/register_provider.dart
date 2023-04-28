@@ -43,4 +43,9 @@ class RegisterProvider extends ChangeNotifier {
 
     notifyListeners();
   }
+
+  void changeToINitialState() {
+    _state = RegisterInitial();
+    notifyListeners();
+  }
 }

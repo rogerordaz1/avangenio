@@ -26,7 +26,8 @@ class LoginProvider extends ChangeNotifier {
 
     either.fold(
       (failure) {
-        _state = const LoginError('Halgo ha salido mal con el login');
+        _state = const LoginError(
+            'Para iniciar session debe estar guardado en el almacenamiento del telefono');
         notifyListeners();
       },
       (user) {
@@ -36,7 +37,7 @@ class LoginProvider extends ChangeNotifier {
     );
   }
 
-  void logOut() {
+  void changeToINitialState() {
     _state = LoginInitial();
     notifyListeners();
   }

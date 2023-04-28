@@ -50,7 +50,7 @@ class _LoginPageBodyState extends State<_LoginPageBody> {
         () {
           if (state is LoginError) {
             SchedulerBinding.instance.addPostFrameCallback((_) {
-              SnackBar snackBar = const SnackBar(content: Text('Erroororro'));
+              SnackBar snackBar = SnackBar(content: Text(state.message!));
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
             });
           }
@@ -120,12 +120,15 @@ class _LoginPageBodyState extends State<_LoginPageBody> {
               TextSignUpOrSingIn(
                 phrase: "¿No tienes una cuenta? ",
                 singInOrSingUpText: 'Registrar',
-                onPressed: () => Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const RegisterPageView(),
-                  ),
-                ),
+                onPressed: () {
+                  provider.changeToINitialState();
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const RegisterPageView(),
+                    ),
+                  );
+                },
               )
             ],
           ),
@@ -134,30 +137,3 @@ class _LoginPageBodyState extends State<_LoginPageBody> {
     );
   }
 }
-
-
-// BlocListener<LoginBloc, LoginState>(
-          //   listener: (context, state) {
-          //     if (state is LoginSussess) {
-          //       BlocProvider.of<AuthenticationBloc>(context)
-          //           .add(LoggedIn(user: state.user, token: state.token));
-          //       Navigator.pushReplacement(context,
-          //           MaterialPageRoute(builder: (context) => const HomePage()));
-          //     }
-          //     if (state is LoginLoading) {
-          //       showDialog(
-          //           context: context,
-          //           builder: ((context) {
-          //             return const Center(
-          //               child: CircularProgressIndicator(),
-          //             );
-          //           }));
-          //     }
-          //     if (state is LoginError) {
-          //       Navigator.pop(context);
-          //       SnackBar snackBar = SnackBar(content: Text(state.message!));
-          //       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-          //     }
-          //   },
-          //   child:
-          // ),

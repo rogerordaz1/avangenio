@@ -48,7 +48,7 @@ class _LoginTextFieldState extends State<LoginTextField> {
                 return 'Please enter some text';
               }
               if (!passwordRegExp.hasMatch(value)) {
-                return 'La contrasena debe tener al menos una letra minúscula, un número,carácter especial, 8 caracteres de longitud';
+                return 'La contrasena debe tener al menos una letra minúscula,\nun número,carácter especial, 8 caracteres de longitud';
               }
               return null;
             },

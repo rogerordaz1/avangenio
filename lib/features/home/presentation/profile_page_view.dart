@@ -32,8 +32,9 @@ class ProfilePageView extends StatelessWidget {
                   style: TextStyle(color: Colors.white),
                 ),
               ),
-              body: Builder(builder: (context) {
-                final state = context.watch<AutheticationProvider>().state;
+              body: Consumer<AutheticationProvider>(
+                  builder: (context, provider, _) {
+                final state = provider.state;
                 if (state is AuthenticationAuthenticated) {
                   return ListView(
                     children: [
@@ -59,7 +60,7 @@ class ProfilePageView extends StatelessWidget {
                               final logProv = context.read<LoginProvider>();
 
                               authProv.loggedOutUser();
-                              logProv.logOut();
+                              logProv.changeToINitialState();
                               var route = MaterialPageRoute(
                                 builder: (context) {
                                   return const LoginPageView();
