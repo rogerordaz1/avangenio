@@ -44,6 +44,8 @@ void main() {
 
     //asert
     verify(mockFakeSharedPreferences.getString(user.email));
+    verify(mockFakeSharedPreferences.setBool('loged', true));
+    verify(mockFakeSharedPreferences.setString('emailLoged', user.email));
     expect(result, equals(user));
   });
 
