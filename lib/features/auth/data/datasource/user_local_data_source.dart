@@ -32,6 +32,7 @@ class UserLocalDataSourceImpl extends UserLocalDataSource {
     await Future.delayed(const Duration(seconds: 2));
 
     final userJson = sharedPreferences.getString(email);
+    print(userJson);
 
     if (userJson != null) {
       var user = UserModel.fromJson(jsonDecode(userJson));
