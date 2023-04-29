@@ -28,7 +28,7 @@ class ProfilePageView extends StatelessWidget {
                 centerTitle: true,
                 elevation: 0,
                 title: const Text(
-                  "Perfil",
+                  "Pagina Principal",
                   style: TextStyle(color: Colors.white),
                 ),
               ),
