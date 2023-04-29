@@ -8,16 +8,20 @@ class TextFieldPassword extends StatefulWidget {
   final String labelText;
   final Function(String value) onChange;
   final String? Function(String? value)? onValidator;
+  final FocusNode? focusNode;
+  final void Function(PointerDownEvent)? onTapOutside;
   const TextFieldPassword({
     Key? key,
     required this.hintText,
     required this.labelText,
     required this.onChange,
     this.onValidator,
+    this.focusNode,
+    this.onTapOutside,
   }) : super(key: key);
 
   @override
-  _TextFieldPasswordState createState() => _TextFieldPasswordState();
+  State<TextFieldPassword> createState() => _TextFieldPasswordState();
 }
 
 class _TextFieldPasswordState extends State<TextFieldPassword> {
@@ -34,13 +38,14 @@ class _TextFieldPasswordState extends State<TextFieldPassword> {
           SizeConfig.blockSizeVertical! * 2,
         ),
         child: TextFormField(
+          focusNode: widget.focusNode,
+          onTapOutside: widget.onTapOutside,
           validator: widget.onValidator,
           onChanged: widget.onChange,
           obscureText: passwordObscure,
           style: TextStyle(color: textColor),
           cursorColor: textColor,
           decoration: InputDecoration(
-              //TODO: Hacer la implemetacion de buscar el valor del campo...
               prefixIcon: const Icon(Icons.vpn_key),
               suffixIcon: IconButton(
                 onPressed: () => setState(() {

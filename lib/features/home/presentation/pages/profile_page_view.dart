@@ -7,7 +7,7 @@ import 'package:avangenio/features/home/presentation/widgets/user_sections.dart'
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../auth/presentation/blocs/authentication/authentication_provider.dart';
+import '../../../auth/presentation/blocs/authentication/authentication_provider.dart';
 
 class ProfilePageView extends StatelessWidget {
   const ProfilePageView({Key? key}) : super(key: key);

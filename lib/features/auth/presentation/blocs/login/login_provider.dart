@@ -27,7 +27,7 @@ class LoginProvider extends ChangeNotifier {
     either.fold(
       (failure) {
         _state = const LoginError(
-            'Para iniciar session debe estar guardado en el almacenamiento del telefono');
+            'Para iniciar session debe el usuario estar guardado en el almacenamiento del telefono');
         notifyListeners();
       },
       (user) {

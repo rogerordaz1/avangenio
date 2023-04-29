@@ -1,7 +1,7 @@
 import 'package:avangenio/features/auth/presentation/blocs/authentication/authentication_provider.dart';
 import 'package:avangenio/features/auth/presentation/blocs/login/login_provider.dart';
 import 'package:avangenio/features/auth/presentation/blocs/login/login_state.dart';
-import 'package:avangenio/features/home/presentation/profile_page_view.dart';
+import 'package:avangenio/features/home/presentation/pages/profile_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
@@ -27,19 +27,14 @@ class LoginPageView extends StatelessWidget {
   }
 }
 
-class _LoginPageBody extends StatefulWidget {
+class _LoginPageBody extends StatelessWidget {
   const _LoginPageBody({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<_LoginPageBody> createState() => _LoginPageBodyState();
-}
-
-class _LoginPageBodyState extends State<_LoginPageBody> {
-  @override
   Widget build(BuildContext context) {
-    final logicProvider = context.watch<LoginProvider>();
+    final logicProvider = context.read<LoginProvider>();
     final authProv = context.read<AutheticationProvider>();
 
     final formKey = GlobalKey<FormState>();
@@ -47,27 +42,22 @@ class _LoginPageBodyState extends State<_LoginPageBody> {
       builder: (context, provider, _) {
         var state = provider.state;
 
-        () {
-          if (state is LoginError) {
-            SchedulerBinding.instance.addPostFrameCallback((_) {
-              SnackBar snackBar = SnackBar(content: Text(state.message!));
-              ScaffoldMessenger.of(context).showSnackBar(snackBar);
-            });
-          }
+        if (state is LoginError) {
+          SchedulerBinding.instance.addPostFrameCallback((_) {
+            SnackBar snackBar = SnackBar(content: Text(state.message!));
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          });
+        }
 
-          if (state is LoginSussess) {
-            SchedulerBinding.instance.addPostFrameCallback((_) {
-              authProv.loggedInUser(state.user);
+        if (state is LoginSussess) {
+          SchedulerBinding.instance.addPostFrameCallback((_) {
+            authProv.loggedInUser(state.user);
 
-              var route = MaterialPageRoute(
-                builder: (context) {
-                  return const ProfilePageView();
-                },
-              );
-              Navigator.of(context).pushReplacement(route);
-            });
-          }
-        }();
+            var route = MaterialPageRoute(
+                builder: (context) => const ProfilePageView());
+            Navigator.of(context).pushReplacement(route);
+          });
+        }
 
         return SingleChildScrollView(
           child: Column(
@@ -98,16 +88,14 @@ class _LoginPageBodyState extends State<_LoginPageBody> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: const [
-                                Flexible(
-                                  child: CircularProgressIndicator(
-                                    color: Colors.white,
-                                  ),
+                                CircularProgressIndicator(
+                                  color: Colors.white,
                                 ),
                               ],
                             ),
                           )
                         : Text(
-                            "Iniciar Sessiòn",
+                            "Iniciar Sessión",
                             style: TextStyle(
                               fontSize: SizeConfig.blockSizeHorizontal! * 6,
                               fontWeight: FontWeight.w700,

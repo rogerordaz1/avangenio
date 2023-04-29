@@ -3,22 +3,25 @@ import 'package:flutter/material.dart';
 import '../../../../../../../core/constantes/colors.dart';
 import '../../../../../../../core/utils/size_config.dart';
 
-
-
 class TextFieldInput extends StatelessWidget {
   final String text;
   final IconData iconName;
   final String ltext;
   final Function(String value) onChange;
   final String? Function(String?)? onValidator;
-  const TextFieldInput(
-      {Key? key,
-      required this.text,
-      required this.iconName,
-      required this.ltext,
-      required this.onChange,
-      this.onValidator})
-      : super(key: key);
+  final FocusNode? focusNode;
+  final void Function(PointerDownEvent)? onTapOutside;
+
+  const TextFieldInput({
+    Key? key,
+    required this.text,
+    required this.iconName,
+    required this.ltext,
+    required this.onChange,
+    this.onValidator,
+    this.focusNode,
+    this.onTapOutside,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +34,10 @@ class TextFieldInput extends StatelessWidget {
           SizeConfig.blockSizeVertical! * 2,
         ),
         child: TextFormField(
+          focusNode: focusNode,
+          onTapOutside: onTapOutside,
           validator: onValidator,
-
           onChanged: onChange,
-          //TODO: Hacer para Procesar los datos...
-
           style: TextStyle(color: textColor),
           cursorColor: textColor,
           decoration: InputDecoration(

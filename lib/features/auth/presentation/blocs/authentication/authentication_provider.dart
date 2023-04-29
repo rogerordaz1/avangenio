@@ -23,6 +23,9 @@ class AutheticationProvider extends ChangeNotifier {
     final isLogged = sharedPreferences.getBool('loged');
 
     if (isLogged != null) {
+
+
+      
       if (isLogged) {
         final userEmail = sharedPreferences.getString('emailLoged');
         

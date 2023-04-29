@@ -1,12 +1,12 @@
 import 'package:avangenio/features/auth/presentation/blocs/authentication/autentication_state.dart';
 import 'package:avangenio/features/auth/presentation/blocs/authentication/authentication_provider.dart';
 import 'package:avangenio/features/auth/presentation/screens/login_page/login_page_view.dart';
-import 'package:avangenio/features/home/presentation/profile_page_view.dart';
+import 'package:avangenio/features/home/presentation/pages/profile_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 
-import '../../../core/utils/size_config.dart';
+import '../../../../core/utils/size_config.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key}) : super(key: key);

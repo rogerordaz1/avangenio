@@ -1,7 +1,8 @@
+import 'package:avangenio/core/constantes/colors.dart';
 import 'package:avangenio/features/auth/presentation/blocs/authentication/authentication_provider.dart';
 import 'package:avangenio/features/auth/presentation/blocs/login/login_provider.dart';
 import 'package:avangenio/features/auth/presentation/blocs/register/register_provider.dart';
-import 'package:avangenio/features/home/presentation/splash_screen.dart';
+import 'package:avangenio/features/home/presentation/pages/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
@@ -48,8 +49,10 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => LoginTextFieldsHelperCubit()),
       ],
       child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(),
+        debugShowCheckedModeBanner: true,
+        theme: ThemeData(
+          primarySwatch: Colors.orange,
+        ),
         title: 'Avangenio',
         home: const SplashScreen(),
       ),
