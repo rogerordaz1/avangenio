@@ -27,17 +27,22 @@ class LoginPageView extends StatelessWidget {
   }
 }
 
-class _LoginPageBody extends StatelessWidget {
+class _LoginPageBody extends StatefulWidget {
   const _LoginPageBody({
     Key? key,
   }) : super(key: key);
 
   @override
+  State<_LoginPageBody> createState() => _LoginPageBodyState();
+}
+
+class _LoginPageBodyState extends State<_LoginPageBody> {
+  final formKey = GlobalKey<FormState>();
+  @override
   Widget build(BuildContext context) {
     final logicProvider = context.read<LoginProvider>();
     final authProv = context.read<AutheticationProvider>();
 
-    final formKey = GlobalKey<FormState>();
     return Consumer<LoginProvider>(
       builder: (context, provider, _) {
         var state = provider.state;

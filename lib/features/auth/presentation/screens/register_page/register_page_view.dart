@@ -14,14 +14,19 @@ import '../login_page/login_page_view.dart';
 import 'widgets/background_image.dart';
 import 'widgets/text_field.dart';
 
-class RegisterPageView extends StatelessWidget {
+class RegisterPageView extends StatefulWidget {
   const RegisterPageView({Key? key}) : super(key: key);
 
+  @override
+  State<RegisterPageView> createState() => _RegisterPageViewState();
+}
+
+class _RegisterPageViewState extends State<RegisterPageView> {
+  var formkey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final registerProvider = context.read<RegisterProvider>();
     final authProv = context.read<AutheticationProvider>();
-    var formkey = GlobalKey<FormState>();
 
     return Scaffold(
       backgroundColor: Colors.white,

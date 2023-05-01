@@ -15,6 +15,7 @@ class RegisterTextField extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           TextFieldInput(
+            
               onValidator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter some text';
